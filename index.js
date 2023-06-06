@@ -1,5 +1,5 @@
 const express = require('express');
-const tf = require('@tensorflow/tfjs-node');
+const { loadLayersModel, tensor2d } = require('@tensorflow/tfjs-node');
 const cors = require('cors');
 
 const app = express();
@@ -9,49 +9,67 @@ const port = process.env.PORT || 3000; // Use a variável de ambiente fornecida 
 
 app.use(express.json());
 
-// Load the trained model
-const path = require('path');
+let AIModel; // Variável para armazenar o modelo carregado
 
 const loadModel = async () => {
-  const modelPath = path.join(__dirname, './models/model.json');
-  const model = await tf.loadLayersModel(`file://${modelPath}`);
-  return model;
+    AIModel = await loadLayersModel('file://./models/model.json');
+    console.log('Modelo carregado com sucesso');
 };
 
-// Make prediction based on the loaded model and input text
-/*const makePrediction = async (model, text) => {
-  const tensor = tf.tensor2d([text]);
-  const tensorResult = model.predict(tensor);
-  const response = tensorResult.arraySync()[0];
-  return response;
-};*/
-
-const makePrediction = async (model, text) => {
-  const tensor = tf.tensor2d([text]);
-  const tensorResult = model.predict(tensor);
-  const response = await tensorResult.array();
-  return response[0];
+const makePrediction = async (text) => {
+    const tensor = tensor2d([text]);
+    const tensorResult = AIModel.predict(tensor);
+    const response = await tensorResult.array();
+    return response[0];
 };
 
-// Route to receive text from the front-end and send it to the AI
+// Rota para obter o texto da AI
+app.get('/', async (req, res) => {
+    res.send('Welcome to Project AI Luiz Gonzaga !!!');
+});
+
+// Rota para receber o texto do front-end e enviá-lo para a IA
 app.post('/generate', async (req, res) => {
-  const { text } = req.body;
+    const { text } = req.body;
 
-  try {
-    // Load the model
-    const AIModel = await loadModel();
+    try {
+        if (!AIModel) {
+            // Carregar o modelo somente na primeira chamada à rota
+            await loadModel();
+        }
 
-    // Make prediction based on the text
-    const AIResponse = await makePrediction(AIModel, text);
+        // Fazer a previsão com base no texto
+        const AIResponse = await makePrediction(text);
 
-    // Return the AI response to the front-end
-    res.json({ response: AIResponse });
-  } catch (error) {
-    console.error('Error processing text:', error);
-    res.status(500).json({ error: 'Error processing text' });
-  }
+        // Retornar a resposta da IA para o front-end
+        res.json({ response: AIResponse });
+    } catch (error) {
+        console.error('Erro ao processar o texto:', error);
+        res.status(500).json({ error: 'Erro ao processar o texto' });
+    }
+});
+
+// Rota para obter o texto da AI
+app.get('/generate', async (req, res) => {
+    const { text } = req.query;
+
+    try {
+        if (!AIModel) {
+            // Carregar o modelo somente na primeira chamada à rota
+            await loadModel();
+        }
+
+        // Fazer a previsão com base no texto
+        const AIResponse = await makePrediction(text);
+
+        // Retornar a resposta da AI
+        res.json({ response: AIResponse });
+    } catch (error) {
+        console.error('Erro ao processar o texto:', error);
+        res.status(500).json({ error: 'Erro ao processar o texto' });
+    }
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+    console.log(`Servidor executando em http://localhost:${port}`);
 });
