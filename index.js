@@ -12,7 +12,7 @@ app.use(express.json());
 const path = require('path');
 
 const loadModel = async () => {
-  const modelPath = path.join(__dirname, 'luizgonzaga_gen_mjr.h5');
+  const modelPath = path.join(__dirname, './models/model.json');
   const model = await tf.loadLayersModel(`file://${modelPath}`);
   return model;
 };
