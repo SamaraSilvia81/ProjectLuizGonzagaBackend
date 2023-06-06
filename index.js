@@ -4,7 +4,8 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
-const port = 3001;
+
+const port = process.env.PORT || 3000; // Use a variável de ambiente fornecida pelo Railway para a porta
 
 app.use(express.json());
 
