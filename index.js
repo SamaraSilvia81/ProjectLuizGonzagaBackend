@@ -12,8 +12,12 @@ app.use(express.json());
 let AIModel; // Variável para armazenar o modelo carregado
 
 const loadModel = async () => {
+  try {
     AIModel = await loadLayersModel('file://./models/model.json');
     console.log('Modelo carregado com sucesso');
+  } catch (error) {
+    console.error('Erro ao carregar o modelo:', error);
+  }
 };
 
 const makePrediction = async (text) => {
