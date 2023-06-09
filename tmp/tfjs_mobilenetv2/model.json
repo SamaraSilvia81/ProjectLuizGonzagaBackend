@@ -1,0 +1,211 @@
+{
+    "format": "layers-model",
+    "generatedBy": "keras v2.12.0",
+    "convertedBy": "TensorFlow.js Converter v4.6.0",
+    "modelTopology": {
+        "keras_version": "2.12.0",
+        "backend": "tensorflow",
+        "model_config": {
+            "class_name": "Sequential",
+            "config": {
+                "name": "sequential_13",
+                "layers": [
+                    {
+                        "class_name": "InputLayer",
+                        "config": {
+                            "batch_input_shape": [
+                                1,
+                                null
+                            ],
+                            "dtype": "float32",
+                            "sparse": false,
+                            "ragged": false,
+                            "name": "embedding_13_input"
+                        }
+                    },
+                    {
+                        "class_name": "Embedding",
+                        "config": {
+                            "name": "embedding_13",
+                            "trainable": true,
+                            "dtype": "float32",
+                            "batch_input_shape": [
+                                1,
+                                null
+                            ],
+                            "input_dim": 89,
+                            "output_dim": 64,
+                            "embeddings_initializer": {
+                                "class_name": "RandomUniform",
+                                "config": {
+                                    "minval": -0.05,
+                                    "maxval": 0.05,
+                                    "seed": null
+                                }
+                            },
+                            "embeddings_regularizer": null,
+                            "activity_regularizer": null,
+                            "embeddings_constraint": null,
+                            "mask_zero": false,
+                            "input_length": null
+                        }
+                    },
+                    {
+                        "class_name": "GRU",
+                        "config": {
+                            "name": "gru_13",
+                            "trainable": true,
+                            "dtype": "float32",
+                            "return_sequences": true,
+                            "return_state": false,
+                            "go_backwards": false,
+                            "stateful": true,
+                            "unroll": false,
+                            "time_major": false,
+                            "units": 1026,
+                            "activation": "tanh",
+                            "recurrent_activation": "sigmoid",
+                            "use_bias": true,
+                            "kernel_initializer": {
+                                "class_name": "GlorotUniform",
+                                "config": {
+                                    "seed": null
+                                }
+                            },
+                            "recurrent_initializer": {
+                                "class_name": "GlorotUniform",
+                                "config": {
+                                    "seed": null
+                                }
+                            },
+                            "bias_initializer": {
+                                "class_name": "Zeros",
+                                "config": {}
+                            },
+                            "kernel_regularizer": null,
+                            "recurrent_regularizer": null,
+                            "bias_regularizer": null,
+                            "activity_regularizer": null,
+                            "kernel_constraint": null,
+                            "recurrent_constraint": null,
+                            "bias_constraint": null,
+                            "dropout": 0.0,
+                            "recurrent_dropout": 0.0,
+                            "implementation": 2
+                        }
+                    },
+                    {
+                        "class_name": "Dense",
+                        "config": {
+                            "name": "dense_13",
+                            "trainable": true,
+                            "dtype": "float32",
+                            "units": 89,
+                            "activation": "linear",
+                            "use_bias": true,
+                            "kernel_initializer": {
+                                "class_name": "GlorotUniform",
+                                "config": {
+                                    "seed": null
+                                }
+                            },
+                            "bias_initializer": {
+                                "class_name": "Zeros",
+                                "config": {}
+                            },
+                            "kernel_regularizer": null,
+                            "bias_regularizer": null,
+                            "activity_regularizer": null,
+                            "kernel_constraint": null,
+                            "bias_constraint": null
+                        }
+                    }
+                ]
+            }
+        },
+        "training_config": {
+            "loss": "sparse_cat_loss",
+            "metrics": null,
+            "weighted_metrics": null,
+            "loss_weights": null,
+            "optimizer_config": {
+                "class_name": "Custom>Adam",
+                "config": {
+                    "name": "Adam",
+                    "weight_decay": null,
+                    "clipnorm": null,
+                    "global_clipnorm": null,
+                    "clipvalue": null,
+                    "use_ema": false,
+                    "ema_momentum": 0.99,
+                    "ema_overwrite_frequency": null,
+                    "jit_compile": true,
+                    "is_legacy_optimizer": false,
+                    "learning_rate": 0.0010000000474974513,
+                    "beta_1": 0.9,
+                    "beta_2": 0.999,
+                    "epsilon": 1e-07,
+                    "amsgrad": false
+                }
+            }
+        }
+    },
+    "weightsManifest": [
+        {
+            "paths": [
+                "group1-shard1of4.bin",
+                "group1-shard2of4.bin",
+                "group1-shard3of4.bin",
+                "group1-shard4of4.bin"
+            ],
+            "weights": [
+                {
+                    "name": "dense_13/kernel",
+                    "shape": [
+                        1026,
+                        89
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "dense_13/bias",
+                    "shape": [
+                        89
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "embedding_13/embeddings",
+                    "shape": [
+                        89,
+                        64
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "gru_13/gru_cell_13/kernel",
+                    "shape": [
+                        64,
+                        3078
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "gru_13/gru_cell_13/recurrent_kernel",
+                    "shape": [
+                        1026,
+                        3078
+                    ],
+                    "dtype": "float32"
+                },
+                {
+                    "name": "gru_13/gru_cell_13/bias",
+                    "shape": [
+                        3078
+                    ],
+                    "dtype": "float32"
+                }
+            ]
+        }
+    ]
+}
