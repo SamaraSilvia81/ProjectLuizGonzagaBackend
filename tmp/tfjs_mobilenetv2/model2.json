@@ -14,7 +14,7 @@
                         "class_name": "InputLayer",
                         "config": {
                             "batch_input_shape": [
-                                128,
+                                1,
                                 null
                             ],
                             "dtype": "float32",
@@ -30,7 +30,7 @@
                             "trainable": true,
                             "dtype": "float32",
                             "batch_input_shape": [
-                                128,
+                                1,
                                 null
                             ],
                             "input_dim": 89,
