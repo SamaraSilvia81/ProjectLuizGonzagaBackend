@@ -111,7 +111,7 @@ let AIModel;
 
 const loadModel = async () => {
   try {
-    const modelPath = path.resolve(__dirname, 'tmp/tfjs_mobilenetv2', 'model2.json');
+    const modelPath = path.resolve(__dirname, 'tmp/tfjs_mobilenetv2', 'model.json');
     AIModel = await loadLayersModel(`file://${modelPath}`);
 
     console.log('Modelo carregado com sucesso');
@@ -182,8 +182,7 @@ const findArgmax = (array) => {
 };
 
 app.post('/generate', async (req, res) => {
-  const { text } = req.body;
-  const count = 100;
+  const { text, count } = req.body;
 
   try {
     if (!AIModel) {
@@ -195,17 +194,16 @@ app.post('/generate', async (req, res) => {
 
     for (let i = 0; i < count; i++) {
       const argmaxIndex = findArgmax(AIResponse);
-      console.log(argmaxIndex);
       argmaxIndices.push(argmaxIndex);
       AIResponse[argmaxIndex] = -Infinity;
     }
 
     const words = argmaxIndices.map((index) => reverseDictionary[index]);
     const joinedWords = words.join('');
-    const formattedResponse = joinedWords.replace(/\\n/g, '\n');
+    // const formattedResponse = joinedWords.replace(/\\n/g, '\n');
 
     res.json({
-      response: formattedResponse,
+      response: joinedWords,
     });
   } catch (error) {
     console.error('Erro ao processar o texto:', error);
